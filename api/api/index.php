@@ -1,9 +1,17 @@
 <?php
+
+
+//die($_GET['q']);
+//die(print_r($_POST));
+
+
+
 declare(strict_types=1);
 
 namespace Api;
 
 require_once '../vendor/autoload.php';
+require_once "../func.php";
 
 use Model;
 use PDO;
@@ -25,42 +33,71 @@ $method = $_SERVER['REQUEST_METHOD'];
 @$q = $_GET['q'];
 @$params = explode('/', $q ?: "");
 
-$connect = new Model\PostModel();
+//$connect = new Model\PostModel();
+$connect = new Model\NewPostModel();
 
 $type = $params[0];
 @$id = (int)$params[1]; ///  можно ????
 
-
 if ($method === 'GET') {
-    if ($type === 'api-posts') {
-        echo $connect->getPosts();
-
-        $connect = null;
-    } elseif ($type === 'api-post' && isset($id)) {
-        echo $connect->getPost($id);
-        $connect = null;
+    if ($type === 'gets') {
+        echo 'get1231312';
     }
 } elseif ($method === 'POST') {
-    if ($type === 'api-post') {
-        $connect->addPost($_POST);
-        $connect = null;
+    if ($type === 'uploadFile') {
+
+        //ОТПРАВКА НА СЕРВЕР ФАЙЛА
+
+        $target_dir = "../uploads/";
+        $target_file = $target_dir . basename($_FILES["file"]["name"]);
+
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+            echo "The file has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
     }
 } elseif ($method === 'PATCH') {
-    if ($type === 'api-post') {
-        if (isset($id)) {
-            $data = file_get_contents('php://input');
-            $data = json_decode($data, true);
-//            die(print_r($data));
-            $connect->updatePost($id, $data);
-            $connect = null;
-        }
-    }
+    echo 'patch';
 } elseif ($method === 'DELETE') {
-    if ($type === 'api-post') {
-        if (isset($id)) {
-            $connect->deletePost($id);
-            $connect = null;
-        }
-    }
+    echo 'delete';
 }
+
+
+
+
+
+
+
+//if ($method === 'GET') {
+//    if ($type === 'api-posts') {
+//        echo $connect->getPosts();
+//        $connect = null;
+//    } elseif ($type === 'api-post' && isset($id)) {
+//        echo $connect->getPost($id);
+//        $connect = null;
+//    }
+//} elseif ($method === 'POST') {
+//    if ($type === 'api-post') {
+//        $connect->addPost($_POST);
+//        $connect = null;
+//    }
+//} elseif ($method === 'PATCH') {
+//    if ($type === 'api-post') {
+//        if (isset($id)) {
+//            $data = file_get_contents('php://input');
+//            $data = json_decode($data, true);
+////            die(print_r($data));
+//            $connect->updatePost($id, $data);
+//            $connect = null;
+//        }
+//    }
+//} elseif ($method === 'DELETE') {
+//    if ($type === 'api-post') {
+//        if (isset($id)) {
+//            $connect->deletePost($id);
+//            $connect = null;
+//        }
+//    }
+//}
 
