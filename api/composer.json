@@ -9,6 +9,8 @@
   "require": {
     "ext-pdo": "*",
     "ext-simplexml": "*",
-    "ext-xml": "*"
+    "ext-xml": "*",
+    "ext-dom": "*",
+    "ext-libxml": "*"
   }
 }

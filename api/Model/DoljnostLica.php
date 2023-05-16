@@ -1,12 +1,8 @@
 <?php
 declare(strict_types=1);
-
 namespace Model;
 
-use JsonSerializable;
-
-class Descipline extends XmlToJson
-//    implements JsonSerializable
+class DoljnostLica extends XmlToJson
 {
 
     private
@@ -14,22 +10,15 @@ class Descipline extends XmlToJson
     ,   $nameDescipl
     ,   $kodKafedriDescipl
     ,   $zEDescipl
-    ,   $per1
-    ,   $per2
     ;
 
-    public $string1 = null;
-
-    public function all($json)
-    {
-
-        foreach ($json["dsMMISDB"]["ПланыСтроки"] as $locationObj) {
-            $this->nameDescipl = $locationObj["@Дисциплина"];
-            $this->indexDescipl = $locationObj["@diffgr:id"];
-            $array[] = array('id' => $this->indexDescipl, 'name' => $this->nameDescipl);
+    public function all($json){
+        foreach($json["dsMMISDB"]["ДолжностныеЛица"] as $locationObj){
+            $this->nameDescipl = $locationObj["@ФИО"];
+            $this->indexDescipl = $locationObj["@Должность"];
+            $array[] = array('ФИО' => $this->nameDescipl, 'Должность' => $this->indexDescipl);
         }
-        return json_encode($array, JSON_UNESCAPED_UNICODE) . "\n";
-
+        return json_encode($array,JSON_UNESCAPED_UNICODE)."\n";
     }
 
     public function toDocument($name, $data)
@@ -56,7 +45,7 @@ class Descipline extends XmlToJson
             $namee = 'ИВТ_АСОИУ';
         }
 
-        return 'desciplina_' . $namee . '_' . $this->dateDocument($json);
+        return 'doljnost_' . $namee . '_' . $this->dateDocument($json);
 
     }
 
@@ -69,6 +58,9 @@ class Descipline extends XmlToJson
         }
         return $string2;
     }
+
+
+
 
 
 
