@@ -26,6 +26,7 @@ header('Access-Control-Allow-Credentials: true');
 header('Content-type: json/application');
 
 //require_once "functions.php";
+require_once "../func.php";
 
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -44,18 +45,9 @@ if ($method === 'GET') {
         echo 'get1231312';
     }
 } elseif ($method === 'POST') {
+    //ОТПРАВКА НА СЕРВЕР ФАЙЛА
     if ($type === 'uploadFile') {
-
-        //ОТПРАВКА НА СЕРВЕР ФАЙЛА
-
-        $target_dir = "../uploads/";
-        $target_file = $target_dir . basename($_FILES["file"]["name"]);
-
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-            echo "The file has been uploaded.";
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
+        upload();
     }
 } elseif ($method === 'PATCH') {
     echo 'patch';
