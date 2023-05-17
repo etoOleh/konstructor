@@ -12,10 +12,7 @@ https://konstr:8890/api/uploadFile
 ```
 <h3>POST Передаёт данные в теле</h3>
 > POST https://konstr:8890/api/uploadFile HTTP/1.1
-> content-type: application/json
-> {
-> "file": "example_file.plx",
-> }
+
 
 ## Пример в POSTMAN
 
